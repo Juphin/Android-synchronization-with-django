@@ -9,5 +9,8 @@ object Constracts {
     const val SYNC_STATUE_OKAY  = 0
     const val SYNC_STATUS_FAILED = 1
 
+    val DATABASE_NAME = "DataBase"
+    val SYNC_STATUS = "syncstatus"
+
 
 }

@@ -19,36 +19,44 @@
         android:orientation="vertical">
 
 
-            <TextView
+        <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Aider la jeunesses a se developper"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:fontFamily="sans-serif-light"
                 android:textStyle="bold"
                 android:textColor="#000"/>
 
-            <TextView
-                 android:id="@+id/content"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Here we are going to talk about the main content of the app"
-                 android:textSize="16sp"
-                 android:visibility="visible"
-                 android:layout_marginTop="10dp"
-                 android:textColor="#000"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Here we are going to talk about the main content of the app"
+                        android:textSize="16sp"
+                        android:visibility="visible"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:textColor="#000"/>
 
 
-        <ImageView
-                android:id="@+id/status"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/status_ok"
-                android:scaleType="centerCrop"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="left"/>
+                <ImageView
+                        android:id="@+id/status"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/status_ok"
+                        android:scaleType="centerCrop"
+                        android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

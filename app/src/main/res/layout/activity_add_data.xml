@@ -18,6 +18,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Title"
+                android:padding="10dp"
+                android:background="@drawable/custom_edit_text_bg"
                 android:layout_weight="1"/>
 
         <EditText
@@ -27,6 +29,9 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Content"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:background="@drawable/custom_edit_text_bg"
                 android:gravity="start|top"
                 android:inputType="textMultiLine" />
 
@@ -35,6 +40,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="sendDataToServer"
+                android:background="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:layout_marginTop="20dp"
                 android:text="Save"/>
     </LinearLayout>
 

@@ -42,7 +42,7 @@ class AddDataActivity : AppCompatActivity() {
             pubRequest.enqueue(object: Callback<PubModels>{
                 override fun onResponse(call: Call<PubModels>, response: Response<PubModels>) {
                     if(response.code() == 201){
-                        saveToLocalDatabase(1)
+                        saveToLocalDatabase(0)
                     }else{
                         saveToLocalDatabase(1)
                         Toast.makeText(this@AddDataActivity, response.code().toString(), Toast.LENGTH_SHORT).show()
@@ -71,9 +71,9 @@ class AddDataActivity : AppCompatActivity() {
             val id = pubDao.insert(PubTable(0, myTitle, myContent, status))
             title.setText("")
             content.setText("")
-            Toast.makeText(this@AddDataActivity, "Donnée enregistré avec success, id : $id", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@AddDataActivity, "Data saved successfully, id : $id", Toast.LENGTH_SHORT).show()
         }else{
-            Toast.makeText(this@AddDataActivity, "Tous le champs sont obligatoire", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@AddDataActivity, "All fields are required", Toast.LENGTH_SHORT).show()
         }
     }
 

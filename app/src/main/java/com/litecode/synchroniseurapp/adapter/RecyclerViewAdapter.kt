@@ -12,7 +12,7 @@ import com.litecode.synchroniseurapp.R
 import com.litecode.synchroniseurapp.models.Constracts
 import com.marie.mutinga.kyetting.api.RecyclerPubModels
 
-class RecyclerViewAdapter (private val context: Context, private val dataList: MutableList<RecyclerPubModels>) :
+class RecyclerViewAdapter (private val context: Context, private val dataList: ArrayList<RecyclerPubModels>) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
