@@ -1,4 +1,4 @@
-package com.litecode.synchroniseurapp.Models;
+package com.litecode.synchroniseurapp.models;
 
 public class MyContract {
 

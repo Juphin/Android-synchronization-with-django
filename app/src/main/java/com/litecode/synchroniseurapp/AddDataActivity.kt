@@ -7,10 +7,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import androidx.room.Room
-import com.litecode.synchroniseurapp.Models.MyContract
 import com.litecode.synchroniseurapp.roomDatabaseManager.DatabaseManager
 import com.litecode.synchroniseurapp.roomDatabaseManager.PubTable
+import com.marie.mutinga.kyetting.api.PubModels
+import com.marie.mutinga.kyetting.api.PubService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AddDataActivity : AppCompatActivity() {
 
@@ -24,28 +27,56 @@ class AddDataActivity : AppCompatActivity() {
 
         title = findViewById(R.id.title)
         content = findViewById(R.id.content)
-
     }
 
 
-    fun submitData(v: View){
-        saveToLocalDatabase()
+    fun sendDataToServer(v: View){
+        val myTitle = title.text.toString()
+        val myContent = content.text.toString()
+
+        val service = PubService.create()
+        val pubRequest = service.sendDataOrSync(myTitle, myContent)
+
+        if(checkNetworkConnection()){
+            //Calling methods of retrofit for handling data
+            pubRequest.enqueue(object: Callback<PubModels>{
+                override fun onResponse(call: Call<PubModels>, response: Response<PubModels>) {
+                    if(response.code() == 201){
+                        saveToLocalDatabase(1)
+                    }else{
+                        saveToLocalDatabase(1)
+                        Toast.makeText(this@AddDataActivity, response.code().toString(), Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<PubModels>, t: Throwable) {
+                    saveToLocalDatabase(1)
+                    Toast.makeText(this@AddDataActivity, t.message.toString(), Toast.LENGTH_SHORT).show()
+                }
+            })
+        }else{
+            // No connexion available, Saving the data to the local database
+            saveToLocalDatabase(1)
+        }
     }
 
 
-    private fun saveToLocalDatabase() {
+
+    private fun saveToLocalDatabase(status: Int) {
         val databaseManager = DatabaseManager.getDatabase(this)
         val pubDao = databaseManager.getPublicationDao()
         val myTitle = title.text.toString()
         val myContent = content.text.toString()
         if (myTitle != "" && myContent != "") {
-            val id = pubDao.insert(PubTable(0, myTitle, myContent, 1))
+            val id = pubDao.insert(PubTable(0, myTitle, myContent, status))
             title.setText("")
             content.setText("")
-
             Toast.makeText(this@AddDataActivity, "Donnée enregistré avec success, id : $id", Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(this@AddDataActivity, "Tous le champs sont obligatoire", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun checkNetworkConnection(): Boolean {
         val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
