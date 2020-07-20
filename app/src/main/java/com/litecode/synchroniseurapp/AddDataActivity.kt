@@ -62,7 +62,7 @@ class AddDataActivity : AppCompatActivity() {
 
 
 
-    private fun saveToLocalDatabase(status: Int) {
+    fun saveToLocalDatabase(status: Int) {
         val databaseManager = DatabaseManager.getDatabase(this)
         val pubDao = databaseManager.getPublicationDao()
         val myTitle = title.text.toString()

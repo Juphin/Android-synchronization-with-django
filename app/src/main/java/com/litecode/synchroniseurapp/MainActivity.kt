@@ -1,15 +1,20 @@
 package com.litecode.synchroniseurapp
 
+import android.app.job.JobInfo
 import android.app.job.JobScheduler
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.litecode.pictrumapp.RecyclerAdapter.RecyclerViewAdapter
 import com.litecode.synchroniseurapp.roomDatabaseManager.DatabaseManager
+import com.litecode.synchroniseurapp.services.MJobScheduler
 import com.marie.mutinga.kyetting.api.RecyclerPubModels
 
 class MainActivity : AppCompatActivity() {
@@ -28,8 +33,6 @@ class MainActivity : AppCompatActivity() {
 
 
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        //adapter = RecyclerViewAdapter(this, listPub)
-        //recyclerView.setAdapter(adapter)
 
         layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -40,11 +43,11 @@ class MainActivity : AppCompatActivity() {
 
         getDataFromLocalDatabase()
 
-        //initJobScheduler()
+        initJobScheduler()
     }
 
     fun getDataFromLocalDatabase(){
-        // Fetching all the publications from room databasee
+        // Fetching all the publications from room database
         val databaseManager = DatabaseManager.getDatabase(this)
         var list = databaseManager.getPublicationDao().getAll()
 
@@ -53,17 +56,14 @@ class MainActivity : AppCompatActivity() {
             val adapter = RecyclerViewAdapter(this, pubList)
             recyclerView.adapter = adapter
         }
-
-
     }
 
 
-
-    /*fun initJobScheduler() {
+    fun initJobScheduler() {
         jobScheduler = applicationContext.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
         val resultCode = jobScheduler.schedule(
-            JobInfo.Builder(JOB_ID, ComponentName(this, JobScheduler::class.java!!))
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            JobInfo.Builder(JOB_ID, ComponentName(this, MJobScheduler::class.java))
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NOT_ROAMING)
                 //.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                 .setMinimumLatency(1000)
                 .setPersisted(true)
@@ -75,8 +75,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Job error", Toast.LENGTH_SHORT).show()
         }
-
-    }*/
+    }
 
 
     fun openEditData(v: View){
